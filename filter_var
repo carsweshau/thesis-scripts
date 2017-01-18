@@ -1,0 +1,24 @@
+#!/bin/bash
+cd /media/chemgen/Elements/SAK_DHK_RG/BQSR
+GATK=/media/chemgen/Angiogenesis/EXOME_PIPE/GATK/GenomeAnalysisTK.jar
+for f in *_snps.vcf.recalibrated; do
+    STEM=$(basename "${f}" _snps.vcf.recalibrated);
+    java -jar $GATK \
+    -T VariantFiltration \
+    -R /media/chemgen/Angiogenesis/EXOME_PIPE/bwa.kit/hg19/hg19.fa \
+    --variant ${f} \
+    -o ${STEM}_snp.recalibrated.filtered.vcf \
+    --clusterWindowSize 10 \
+    --filterExpression "MQ0 >= 4 && ((MQ0 / (1.0 * DP)) > 0.1)" \
+    --filterName "HARD_TO_VALIDATE" \
+    --filterExpression "DP < 5 " \
+    --filterName "LowCoverage" \
+    --filterExpression "QUAL < 30.0 " \
+    --filterName "VeryLowQual" \
+    --filterExpression "QUAL > 30.0 && QUAL < 50.0 " \
+    --filterName "LowQual" \
+    --filterExpression "QD < 1.5 " \
+    --filterName "LowQD" \
+    --filterExpression "FS > -10.0 " \
+    --filterName "StrandBias"    
+done

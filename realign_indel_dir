@@ -1,0 +1,20 @@
+#!/bin/bash
+echo --- running realign_indel_dir ---
+GATK=/home/chemgen/EXOME/GATK/GenomeAnalysisTK.jar
+ANDY_COUNT=1
+while [ $ANDY_COUNT -le 9 ]; do
+	CUR_DIR=/media/chemgen/Elements/SAI/Output_Andy${ANDY_COUNT}/PCR_Andy${ANDY_COUNT}
+	cd ${CUR_DIR}
+	mkdir -p ../IND_Andy${ANDY_COUNT}
+	mkdir -p ../IND_Andy${ANDY_COUNT}/IND_LIST
+	for f in *.bam; do
+		STEM=$(basename "${f}" .marked.bam);
+		java -jar ${GATK} \
+		-I ${STEM}.marked.bam \
+		-R /home/chemgen/EXOME/bwa.kit/hg19/hg19.fa \
+		-T IndelRealigner \
+		-targetIntervals ../IND_Andy${ANDY_COUNT}/IND_LIST/${STEM}.bam.list \
+		-o ../IND_Andy${ANDY_COUNT}/${STEM}.marked.realigned.bam
+	done
+	ANDY_COUNT=$((ANDY_COUNT=ANDY_COUNT+1))
+done

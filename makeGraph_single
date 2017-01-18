@@ -1,0 +1,7 @@
+#!/bin/bash
+MAKE_GRAPH=/media/chemgen/Elements/scripts/makeGraph.R
+CUR_DIR=/media/chemgen/Elements/SAI/Output_Andy1/BAM_Andy1
+cd ${CUR_DIR}
+f=/media/chemgen/Elements/scripts/Andy1_002.bam_ratio.txt
+cat ${MAKE_GRAPH} | R --slave --args 2 $f
+

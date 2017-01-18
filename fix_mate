@@ -1,0 +1,15 @@
+#!/bin/bash
+cd /media/carsweshau/Elements/SAK_DHK_RG/marked_realigned
+PICARD=/media/windows/EXOME_PIPE/picard/picard.jar
+for f in *.bam; do
+STEM=$(basename "${f}" .marked.realigned.bam);
+I=/media/carsweshau/Elements/SAK_DHK_RG/marked_realigned/${STEM}.marked.realigned.bam;
+O=/media/carsweshau/Elements/SAK_DHK_RG/${STEM}.marked.realigned.fixed.bam;
+java -jar $PICARD FixMateInformation \
+INPUT=$I \
+OUTPUT=$O \
+SO=coordinate \
+VALIDATION_STRINGENCY=LENIENT \
+CREATE_INDEX=true \
+TMP_DIR=/media/carsweshau/Elements/tmp_dir
+done

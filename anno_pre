@@ -1,0 +1,6 @@
+#!/bin/bash
+cd /media/chemgen/Elements/FINALBAMFILES
+CNV2ANNO=/media/chemgen/Angiogenesis/EXOME_PIPE/annovar/convert2annovar.pl
+for f in *_snp.recalibrated.filtered.vcf; do
+    $CNV2ANNO --format vcf4 --includeinfo $f > ${f}.annovar
+done

@@ -1,0 +1,13 @@
+#!/bin/bash
+cd /media/chemgen/Elements/FINALBAMFILES
+mkdir -p SORTEDBAMFILES
+PICARD=/media/chemgen/Angiogenesis/EXOME_PIPE/picard/picard.jar
+for f in *.bam; do
+	STEM=$(basename "${f}" .bam);
+	java -jar $PICARD ReorderSam \
+    	I=$f \
+    	O=SORTEDBAMFILES/${STEM}_reordered.bam \
+    	R=/media/chemgen/Elements/ucsc.hg19.fasta \
+		CREATE_INDEX=TRUE \
+        VALIDATION_STRINGENCY=LENIENT
+done

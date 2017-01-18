@@ -1,0 +1,11 @@
+#!/bin/bash
+echo --- running merge_dir ---
+ANDY_COUNT=1
+while [ $ANDY_COUNT -le 9 ]; do
+	CUR_DIR=/media/carsweshau/Elements/SAI/Output_Andy${ANDY_COUNT}/FIX_Andy${ANDY_COUNT}
+	cd ${CUR_DIR}
+	mkdir -p ../MFIX_Andy${ANDY_COUNT}
+	samtools merge ../MFIX_Andy${ANDY_COUNT}/mfixed_Andy${ANDY_COUNT}.bam *.bam
+	done
+	ANDY_COUNT=$((ANDY_COUNT=ANDY_COUNT+1))
+done

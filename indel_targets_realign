@@ -1,0 +1,19 @@
+#!/bin/bash
+GATK=/media/chemgen/Angiogenesis/EXOME_PIPE/GATK/GenomeAnalysisTK.jar
+cd /media/chemgen/Elements/SAK_DHK_RG/dups_marked
+for f in *.bam; do
+    STEM=$(basename "${f}" .marked.bam);
+    java -jar ${GATK} \
+    -T RealignerTargetCreator \
+    -R /media/chemgen/Angiogenesis/EXOME_PIPE/bwa.kit/hg19/hg19.fa \
+    -o ../${STEM}.bam.list
+done
+for f in *.bam; do
+    STEM=$(basename "${f}" .marked.bam);
+    java -jar ${GATK} \
+    -I ${STEM}.marked.bam \
+    -R /media/chemgen/Angiogenesis/EXOME_PIPE/bwa.kit/hg19/hg19.fa \
+    -T IndelRealigner \
+    -targetIntervals ../${STEM}.bam.list \
+    -o ../${STEM}.marked.realigned.bam
+done

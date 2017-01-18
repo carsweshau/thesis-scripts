@@ -1,0 +1,30 @@
+find *bam | parallel 'bedtools coverage -hist -a SeqCap_EZ_Exome_v3_primary.bed -b {} | grep ^all > {}.hist.all.txt'
+
+find *bam | parallel 'bedtools coverage -hist -abam {} -b targets.numeric.chroms.bed > {}exome.cov.hist.txt'
+
+for f in *bam; do
+	bedtools coverage \
+	-hist \	
+	-abam ${f} \
+	-b targets.numeric.chroms.bed \
+> ${f}.exome.cov.hist.txt
+done
+
+for f in *bam; do
+bedtools coverage -sorted -hist -b ${f} -a 20130108.exome.targets.bed | grep ^all > ${f}.hist.all.txt
+done
+
+sort -k1,1 -k2,2n ${f} > ${f}.sorted.bam
+
+for f in *bam; do
+STEM=$(basename "${f}" .bam);
+samtools sort -o ${STEM}.bam ${f}
+done
+
+find *bam | parallel 'bedtools coverage -sorted -hist -b {} -a targets.numeric.chroms.bed | grep ^all > {}.exome.cov.hist.txt'
+
+for f in *bam; do
+bedtools coverage -hist -b ${f} -a callable_status.bed | grep ^all > ${f}.hist.all.txt
+done
+
+bedtools coverage -hist -abam ANDY_1.merged.dedup.recal.bam -b callable_status.bed > ANDY_1.hist.all.txt

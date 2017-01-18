@@ -1,0 +1,1 @@
+manhattan($DATA.FRAME,chr="chr",bp="start",p="WilcoxonRankSumTestPvalue",ylim=c(0,10),suggestiveline=F,genomewideline=F)

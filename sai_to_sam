@@ -1,0 +1,15 @@
+#!/bin/bash
+cd /media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/SAI_SAK
+COUNT=29
+while [ $COUNT -le 50 ]; do
+echo --- converting $COUNT ---
+if [ $COUNT -lt 10 ];
+	then
+	  /media/chemgen/Angiogenesis/EXOME_PIPE/bwa.kit/bwa sampe -f /media/chemgen/Elements/SAK_DHK_RG/SAM_SAK/SAK_00$COUNT.sam -r '@RG\tID:'SAK_${COUNT}'\tLB:'SAK_${COUNT}'\tSM:'SAK_${COUNT}'\tPL:ILLUMINA' /media/chemgen/Angiogenesis/EXOME_PIPE/bwa.kit/hg19 /media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/SAI_SAK/SAK_CTTGTA_L003_R1_00$COUNT.sai /media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/SAI_SAK/SAK_CTTGTA_L003_R2_00$COUNT.sai /media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/Output_SAK/SAK_CTTGTA_L003_R1_00$COUNT.fastq /media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/Output_SAK/SAK_CTTGTA_L003_R2_00$COUNT.fastq
+fi
+if [ $COUNT -ge 10 ];
+	then
+	  /media/chemgen/Angiogenesis/EXOME_PIPE/bwa.kit/bwa sampe -f /media/chemgen/Elements/SAK_DHK_RG/SAM_SAK/SAK_0$COUNT.sam -r '@RG\tID:'SAK_${COUNT}'\tLB:'SAK_${COUNT}'\tSM:'SAK_${COUNT}'\tPL:ILLUMINA' /media/chemgen/Angiogenesis/EXOME_PIPE/bwa.kit/hg19 /media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/SAI_SAK/SAK_CTTGTA_L003_R1_0$COUNT.sai /media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/SAI_SAK/SAK_CTTGTA_L003_R2_0$COUNT.sai /media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/Output_SAK/SAK_CTTGTA_L003_R1_0$COUNT.fastq /media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/Output_SAK/SAK_CTTGTA_L003_R2_0$COUNT.fastq
+fi
+COUNT=$((COUNT=COUNT+1))
+done

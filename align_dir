@@ -1,0 +1,15 @@
+#!/bin/bash
+echo --- running ---
+cd /media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/130203_SN7001377_0066_BC1P51ACXX/SAI
+ANDY_COUNT=1
+while [ $ANDY_COUNT -le 9 ]; do
+	CUR_DIR=/media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/130203_SN7001377_0066_BC1P51ACXX/SAI/Output_Andy$ANDY_COUNT
+	echo --- current directory $CUR_DIR ---
+	cd $CUR_DIR
+	for f in $(ls | grep fastq | sed -e 's/\.fastq//'); do
+		echo --- processing $f ---
+		bwa aln -t 8 -f $CUR_DIR/SAI_Andy$ANDY_COUNT/$f.sai /home/chemgen/EXOME/bwa.kit/hg19 $f.fastq;
+	done
+	ANDY_COUNT=$((ANDY_COUNT=ANDY_COUNT+1))
+	cd ..
+done

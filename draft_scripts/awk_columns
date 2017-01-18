@@ -1,0 +1,8 @@
+//Start counting from 1
+"awk -F' ' '{if ($5!~/normal/ && 'NR'>1){print ""chr""$1,$2,$3}}' $file",,
+"awk -F' ' '{if ($10 ~/e/ && 'NR'>1){print ""chr""$1"":""$2""-""$3}}' $file",,
+"awk -F' ' '{if ($16 ~/rs/ && 'NR'>1){print ""chr""$1",$2,$3}}' $file"
+
+"awk -F' ' '{if ($4 ~/PASS/ && 'NR'>1){print $1,$2,$3}}' $file",,
+
+awk -F' ' '{if ($4 ~/CALLABLE/){print $1,$2,$3}}' callable_status.bed > call_sites.bed //this line works

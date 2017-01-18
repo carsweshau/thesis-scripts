@@ -1,0 +1,14 @@
+#!/bin/bash
+cd /media/chemgen/Elements/SAK_DHK_RG/SAM_SAK
+PICARD=/media/chemgen/Angiogenesis/EXOME_PIPE/picard/picard.jar
+for f in *.sam; do
+STEM=$(basename "${f}" .sam);
+I=${STEM}.sam;
+O=${STEM}.bam;
+java -jar $PICARD SortSam \
+SO=coordinate \
+INPUT=$I  \
+OUTPUT=$O  \
+VALIDATION_STRINGENCY=LENIENT \
+CREATE_INDEX=true
+done

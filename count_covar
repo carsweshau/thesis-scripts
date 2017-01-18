@@ -1,0 +1,13 @@
+#!/bin/bash
+cd /media/chemgen/Elements/SAK_DHK_RG/fixed
+GATK=/media/chemgen/Angiogenesis/EXOME_PIPE/GATK/GenomeAnalysisTK.jar
+for f in *.bam; do
+    STEM=$(basename "${f}" .bam);
+    java -jar $GATK \
+    -T BaseRecalibrator \
+    -R /media/chemgen/Angiogenesis/EXOME_PIPE/bwa.kit/hg19/hg19.fa \
+    -I $f \
+    -knownSites /media/chemgen/Elements/dbsnp_138_sorted.hg19.vcf \
+    -o ${STEM}_recal_data.csv \
+    -U ALLOW_SEQ_DICT_INCOMPATIBILITY
+done

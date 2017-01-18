@@ -1,0 +1,14 @@
+#!/bin/bash
+MAKE_GRAPH=/media/chemgen/Elements/scripts/makeGraph.R
+ANDY_COUNT=1
+while [ $ANDY_COUNT -le 9 ]; do
+	CUR_DIR=/media/chemgen/Elements/SAI/Output_Andy${ANDY_COUNT}/FREEC_${ANDY_COUNT}
+	cd ${CUR_DIR}
+	mkdir -p ../CNV_GRAPH_${ANDY_COUNT}
+	for f in *_ratio_noNA.txt; do
+		STEM=$(basename "${f}" .marked.realigned.fixed.bam_ratio_noNA.txt);
+		echo ---processing ${STEM}---
+		cat ${MAKE_GRAPH} | R --slave --args 2 $f
+	done
+	ANDY_COUNT=$((ANDY_COUNT=ANDY_COUNT+1))
+done

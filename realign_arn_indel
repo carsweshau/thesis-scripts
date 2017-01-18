@@ -1,0 +1,14 @@
+#!/bin/bash
+cd /media/windows/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/PCR_SAK
+GATK=$HOME/GATK/GenomeAnalysisTK.jar
+for f in *.bam; do
+STEM=$(basename "${f}" .marked.bam);
+I=/media/windows/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/PCR_SAK/${STEM}.marked.bam;
+O=/media/windows/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/INDEL_SAK/${STEM}.marked.realigned.bam;
+java -jar $GATK \
+	-I $I \
+	-R /home/carsweshau/bwa.kit/hg19/hg19.fa \
+	-T IndelRealigner \
+	-targetIntervals /media/windows/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/INDEL_SAK/INDEL_LIST/${STEM}.bam.list \
+	-o $O
+done

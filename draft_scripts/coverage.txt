@@ -1,0 +1,26 @@
+cov = read.table('ANDY_1.hist.all.txt');
+
+    gcov = cov[cov[,1] == 'all',]
+
+    # Create a cumulative distribution from the "raw" hist 
+    # (truncate at depth >=1000)
+    gcov_cumul = 1 - cumsum(gcov[,5])
+
+    # Create a plot of the CDF
+    plot(gcov[2:401,2], gcov_cumul[1:400],
+        + col='darkred', type='l', lwd=2,
+        + xlab="Depth", 
+        + ylab="Fraction of capture target bases >= depth", 
+        + ylim=c(0,1.0),
+    + )
+    # add gridlines
+    abline(v = 20, col = "gray60")
+    abline(v = 50, col = "gray60")
+    abline(v = 80, col = "gray60")
+    abline(v = 100, col = "gray60")
+    abline(h = 0.50, col = "gray60")
+    abline(h = 0.90, col = "gray60")
+
+    axis(1, at=c(20,50,80), labels=c(20,50,80))
+    axis(2, at=c(0.90), labels=c(0.90))
+    axis(2, at=c(0.50), labels=c(0.50))

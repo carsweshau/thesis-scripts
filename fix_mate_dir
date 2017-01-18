@@ -1,0 +1,19 @@
+#!/bin/bash
+echo --- running fix_mate_dir ---
+PICARD=/home/chemgen/EXOME/picard/picard.jar
+ANDY_COUNT=1
+while [ $ANDY_COUNT -le 9 ]; do
+	CUR_DIR=/media/chemgen/Elements/SAI/Output_Andy${ANDY_COUNT}/IND_Andy${ANDY_COUNT}
+	cd ${CUR_DIR}
+	mkdir -p ../FIX_Andy${ANDY_COUNT}
+	for f in *.bam; do
+		STEM=$(basename "${f}" .marked.realigned.bam);
+		java -jar ${PICARD} FixMateInformation \
+		INPUT=${CUR_DIR}/${STEM}.marked.realigned.bam \
+		OUTPUT=../FIX_Andy${ANDY_COUNT}/${STEM}.marked.realigned.fixed.bam \
+		SO=coordinate \
+		VALIDATION_STRINGENCY=LENIENT \
+		CREATE_INDEX=true
+	done
+	ANDY_COUNT=$((ANDY_COUNT=ANDY_COUNT+1))
+done

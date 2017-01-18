@@ -1,0 +1,14 @@
+#!/bin/bash
+cd /media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/130203_SN7001377_0066_BC1P51ACXX/SAI
+HG19=/home/chemgen/EXOME/bwa.kit/hg19/hg19.fa
+ANDY_COUNT=1
+for d in $(ls); do
+	CUR_DIR=/media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/130203_SN7001377_0066_BC1P51ACXX/SAI/Output_Andy$ANDY_COUNT
+	cd $CUR_DIR
+	mkdir -p Output_Andy$ANDY_COUNT/SAI_Andy$ANDY_COUNT
+	for f in *.fastq; do
+		STEM=$(basename "${f}" .fastq);
+		bwa aln -t 8 -f SAI_ANDY$ANDY_COUNT/${STEM}.sai $HG19 $f;
+	done
+	ANDY_COUNT=$((ANDY_COUNT+1))
+done

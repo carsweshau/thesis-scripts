@@ -1,0 +1,47 @@
+#!/bin/bash
+CURRENT_FILE=1
+WRK_DIR=/media/chemgen/Elements1/DMF/L1
+OUT_DIR=/media/chemgen/Elements1/DMF
+#start=`date +%s`
+pstr="[=======================================================================]"
+
+cd $WRK_DIR
+
+# count total number of files in dir
+t=$(ls -1 | wc -l)
+
+# divide by two for true count of fwd and rev reads
+tc=$(($t/2))
+
+while [ $CURRENT_FILE -le 9 ]; do
+	z=$(echo *_00*$CURRENT_FILE*) # both R1 and R2 reads as arguments here
+	python /media/chemgen/Elements1/scripts/interleave_fastq.py $z $OUT_DIR/DMF_L1_CAGATC_Lib$CURRENT_FILE.fastq # interleave_fastq.py R1 R2 OUTPUT
+	#echo $z #Andy$ANDY_COUNT.LX_Lib$CURRENT_FILE.fastq
+	CURRENT_FILE=$((CURRENT_FILE=CURRENT_FILE+1))
+	count=$(($CURRENT_FILE-1))
+	pd=$(( $count * 73 / $tc ))
+	printf "\r%3d.%1d%% %.${pd}s" $(( $count * 100 / $tc )) $(( ($count * 1000 / $tc) % 10 )) $pstr
+  	#runtime=$(( $cur-$start ))
+  	#estremain=$(( ($runtime * $tc / $count)-$runtime ))
+	#printf "\r%d.%d%% complete ($count of $tc) - est %d:%0.2d remaining\e[K" $(( $count*100/$tc )) $(( ($count*1000/$tc)%10)) $(( $estremain/60 )) $(( $estremain%60 ))
+	if [ "$CURRENT_FILE" -eq "$tc" ]; then
+		break
+	fi
+done
+
+while [ $CURRENT_FILE -le $tc ]; do
+	z=$(echo *_0*$CURRENT_FILE*) # both R1 and R2 reads as arguments here
+	python /media/chemgen/Elements1/scripts/interleave_fastq.py $z $OUT_DIR/DMF_L1_CAGATC_Lib$CURRENT_FILE.fastq # interleave_fastq.py R1 R2 OUTPUT
+	#echo $z #Andy$ANDY_COUNT.LX_Lib$CURRENT_FILE.fastq
+	CURRENT_FILE=$((CURRENT_FILE=CURRENT_FILE+1))
+	count=$(($CURRENT_FILE-1))
+	pd=$(( $count * 73 / $tc ))
+	printf "\r%3d.%1d%% %.${pd}s" $(( $count * 100 / $tc )) $(( ($count * 1000 / $tc) % 10 )) $pstr
+  	#runtime=$(( $cur-$start ))
+  	#estremain=$(( ($runtime * $tc / $count)-$runtime ))
+	#printf "\r%d.%d%% complete ($count of $tc) - est %d:%0.2d remaining\e[K" $(( $count*100/$tc )) $(( ($count*1000/$tc)%10)) $(( $estremain/60 )) $(( $estremain%60 ))
+done
+CURRENT_FILE=1
+mail -s "INTERLEAVE FINISHED" "midnight78911@gmail.com" << END_MAIL
+All files have finished running!
+END_MAIL

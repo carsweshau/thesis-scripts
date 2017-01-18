@@ -1,0 +1,4 @@
+#!/bin/bash
+I=/media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/121221_SN7001377_0057_BC1H84ACXX/Sample_Andy3/Andy3_TTAGGC_L006_R1_002.fastq.gz
+O=/media/chemgen/Angiogenesis/FASTQ_FILES/fastq_files/121221_SN7001377_0057_BC1H84ACXX/Sample_Andy3/Andy3_TRIMMED_L006_R1_002.fastq.gz
+java -jar /media/chemgen/Angiogenesis/EXOME_PIPE/Trimmomatic-0.36/trimmomatic-0.36.jar SE -phred33 $I $O ILLUMINACLIP:/media/chemgen/Angiogenesis/EXOME_PIPE/Trimmomatic-0.36/adapters/TruSeq3-SE.fa:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36

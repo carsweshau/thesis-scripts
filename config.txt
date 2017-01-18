@@ -1,0 +1,31 @@
+[general]
+ 
+chrLenFile = /media/carsweshau/Elements/hg19.len
+ploidy = 2
+chrFiles = /home/carsweshau/bwa.kit/hg19
+window = 500
+step = 250
+maxThreads = 4
+noisyData = TRUE
+readCountThreshold = 50
+breakPointType = 4
+printNA = False
+breakPointThreshold = 1.5 
+ 
+[sample]
+ 
+mateFile = {matefile}
+inputFormat = BAM
+mateOrientation = FR
+
+[BAF]
+
+SNPfile = /media/carsweshau/Elements/allsnp142.bed
+ 
+[control]
+
+mateFile = /media/carsweshau/Elements/DMF_control/MFIXED_DMF/mfixed_dmf.bam
+
+[target]
+
+captureRegions = /media/carsweshau/Elements/exonTargets.bed

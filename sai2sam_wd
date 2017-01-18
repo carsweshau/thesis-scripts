@@ -1,0 +1,45 @@
+#!/bin/bash
+
+### EDIT THESE VARIABLES ###
+SAMPLE=Andy1
+FOLDER=L5_Andy1
+### EDIT THESE VARIABLES ###
+
+echo --- running ---
+CUR_DIR=/media/carsweshau/Elements/Andy_samples/SAI_Andy/${SAMPLE}/${FOLDER}
+SAI_NUM=1
+FILE_COUNT=1
+echo --- current directory $CUR_DIR ---
+cd $CUR_DIR
+mkdir -p ../SAM_${FOLDER}
+for f in $(ls); do
+	$((SAI_NUM=SAI_NUM+1))
+done
+SAI_NUM=$((SAI_NUM/2))
+while [ $FILE_COUNT -le $SAI_NUM ]; do
+	echo --- converting $FILE_NUM ---
+	if [ $FILE_COUNT -lt 10 ];
+		then
+		for f in $(ls | grep R1_00${FILE_COUNT} | sed -e 's/\.sai//'); do
+			file1=${f}
+		done
+		for q in $(ls | grep R2_00${FILE_COUNT} | sed -e 's/\.sai//'); do
+			file2=${q}
+		done
+		bwa sampe -f /media/carsweshau/Elements/Andy_samples/SAI_Andy/SAM_${FOLDER}/Andy_00${FILE_COUNT}.sam -r '@RG\tID:ANDY\tLB:DMF-L1\tSM:ANDY\tPL:ILLUMINA' /home/carsweshau/bwa.kit/hg19 $CUR_DIR/${file1}.sai $CUR_DIR/${file2}.sai ../../../${file1}.fastq ../../../${file2}.fastq
+	fi
+	if [ $FILE_COUNT -ge 10 ];
+		then 	
+		for f in $(ls | grep R1_0${FILE_COUNT} | sed -e 's/\.sai//'); do
+			file1=${f}
+		done
+		for q in $(ls | grep R2_0${FILE_COUNT} | sed -e 's/\.sai//'); do
+			file2=${q}
+		done
+		bwa sampe -f /media/carsweshau/Elements/Andy_samples/SAI_Andy/SAM_${FOLDER}/Andy_0${FILE_COUNT}.sam -r '@RG\tID:ANDY\tLB:DMF-L1\tSM:ANDY\tPL:ILLUMINA' /home/carsweshau/bwa.kit/hg19 $CUR_DIR/${file1}.sai $CUR_DIR/${file2}.sai ../../../${file1}.fastq ../../../${file2}.fastq
+	fi
+	FILE_COUNT=$((FILE_COUNT=FILE_COUNT+1))
+done
+
+### BEEP ###
+printf '\a'

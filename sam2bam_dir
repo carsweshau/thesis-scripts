@@ -1,0 +1,20 @@
+#!/bin/bash
+echo --- running sam2bam ---
+PICARD=/home/chemgen/EXOME/picard/picard.jar
+ANDY_COUNT=1
+while [ $ANDY_COUNT -le 9 ]; do
+	CUR_DIR=/media/chemgen/Elements/SAI/Output_Andy${ANDY_COUNT}/SAM_Andy${ANDY_COUNT}
+	cd ${CUR_DIR}
+	mkdir -p ../BAM_Andy${ANDY_COUNT}
+	for f in *.sam; do
+		STEM=$(basename "${f}" .sam);
+		java -jar $PICARD SortSam \
+		SO=coordinate \
+		INPUT=${STEM}.sam \
+		OUTPUT=../BAM_Andy${ANDY_COUNT}/${STEM}.bam \
+		VALIDATION_STRINGENCY=LENIENT \
+		CREATE_INDEX=true
+	done
+	ANDY_COUNT=$((ANDY_COUNT=ANDY_COUNT+1))
+done
+	

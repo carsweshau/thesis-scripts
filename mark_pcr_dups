@@ -1,0 +1,15 @@
+#!/bin/bash
+cd /media/chemgen/Elements/SAK_DHK_RG
+PICARD=/media/chemgen/Angiogenesis/EXOME_PIPE/picard/picard.jar
+for f in *.bam; do
+STEM=$(basename "${f}" .bam);
+I=${f};
+O=../${STEM}.marked.bam;
+java -jar $PICARD MarkDuplicates \
+INPUT=$I  \
+OUTPUT=$O  \
+METRICS_FILE=metrics \
+VALIDATION_STRINGENCY=LENIENT \
+CREATE_INDEX=true \
+VERBOSITY=DEBUG
+done

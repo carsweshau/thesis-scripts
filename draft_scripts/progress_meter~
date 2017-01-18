@@ -1,0 +1,16 @@
+count=0
+total=$(ls -1 | wc -l)
+start=`date +%s`
+pstr="[=======================================================================]"
+
+for f in *gz; do
+STEM=$(basename "${f}" .gz);
+  zcat ${f} > ../extrc/Output_Andy9/"${STEM}";
+  cur=`date +%s`
+  count=$(( $count + 1 ))
+  pd=$(( $count * 73 / $total ))
+  runtime=$(( $cur-$start ))
+  estremain=$(( ($runtime * $total / $count)-$runtime ))
+  printf "\r%3d.%1d%% %.${pd}s" $(( $count * 100 / $total )) $(( ($count * 1000 / $total) % 10 )) $pstr
+  #printf "\r%d.%d%% complete ($count of $total) - est %d:%0.2d remaining\e[K" $(( $count*100/$total )) $(( ($count*1000/$total)%10)) $(( $estremain/60 )) $(( $estremain%60 ))
+done

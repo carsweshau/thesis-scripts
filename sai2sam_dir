@@ -1,0 +1,40 @@
+#!/bin/bash
+echo --- running ---
+ANDY_COUNT=1
+while [ $ANDY_COUNT -le 9 ]; do
+	CUR_DIR=/media/carsweshau/Elements/Andy_samples/SAI_Andy/Andy${ANDY_COUNT}
+	SAI_NUM=1
+	FILE_COUNT=1
+	echo --- current directory $CUR_DIR ---
+	cd $CUR_DIR
+	mkdir -p /media/chemgen/Elements/Andy_samples/SAI_Andy/SAM_Andy${ANDY_COUNT}
+	for f in $(ls); do
+		$((SAI_NUM=SAI_NUM+1))
+	done
+	SAI_NUM=$((SAI_NUM/2))
+	while [ $FILE_COUNT -le $SAI_NUM ]; do
+		echo --- converting $FILE_NUM ---
+		if [ $FILE_COUNT -lt 10 ];
+			then
+			for f in $(ls | grep L001_R1_00${FILE_COUNT} | sed -e 's/\.sai//'); do
+				file1=${f}
+			done
+			for q in $(ls | grep L001_R2_00${FILE_COUNT} | sed -e 's/\.sai//'); do
+				file2=${q}
+			done
+			bwa sampe -f /media/carsweshau/Elements/DMF_control/SAM_Andy/Andy${ANDY_COUNT}_00${FILE_COUNT}.sam -r '@RG\tID:ANDY\tLB:DMF-L1\tSM:ANDY\tPL:ILLUMINA' /home/carsweshau/bwa.kit/hg19 $CUR_DIR/${file1}.sai $CUR_DIR/${file2}.sai ../Output_DMF/${file1}.fastq ../Output_DMF/${file2}.fastq
+		fi
+		if [ $FILE_COUNT -lt 10 ];
+			then 	
+			for f in $(ls | grep L002_R1_0${FILE_COUNT} | sed -e 's/\.sai//'); do
+				file1=${f}
+			done
+			for q in $(ls | grep L002_R2_0${FILE_COUNT} | sed -e 's/\.sai//'); do
+				file2=${q}
+			done
+			bwa sampe -f /media/carsweshau/Elements/DMF_control/SAM_Andy/Andy${ANDY_COUNT}_00${FILE_COUNT}.sam -r '@RG\tID:ANDY\tLB:DMF-L1\tSM:ANDY\tPL:ILLUMINA' /home/carsweshau/bwa.kit/hg19 $CUR_DIR/${file1}.sai $CUR_DIR/${file2}.sai ../Output_DMF/${file1}.fastq ../Output_DMF/${file2}.fastq
+		fi
+		FILE_COUNT=$((FILE_COUNT=FILE_COUNT+1))
+	done
+	ANDY_COUNT=$((ANDY_COUNT=ANDY_COUNT+1))
+done

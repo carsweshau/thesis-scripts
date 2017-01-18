@@ -1,0 +1,22 @@
+#!/bin/bash
+cd /media/chemgen/Elements/SAK_DHK_RG/BQSR
+GATK=/media/chemgen/Angiogenesis/EXOME_PIPE/GATK/GenomeAnalysisTK.jar
+for f in *.BQSR.bam; do
+    STEM=$(basename "${f}" .bam);
+    java -jar $GATK \
+    -glm BOTH \
+    -R /media/chemgen/Angiogenesis/EXOME_PIPE/bwa.kit/hg19/hg19.fa \
+    -T UnifiedGenotyper \
+    -I $f \
+    -D /media/chemgen/Elements/dbsnp_138_sorted.hg19.vcf \
+    -o ${STEM}_snps.vcf \
+    -metrics ${STEM}_snps.metrics \
+    -stand_call_conf 50.0 \
+    -stand_emit_conf 10.0 \
+    -dcov 1000 \
+    -A Coverage \
+    -A AlleleBalance \
+    -L /media/chemgen/Elements/exonTargets.bed \
+    -U ALLOW_SEQ_DICT_INCOMPATIBILITY    
+    
+done

@@ -1,0 +1,8 @@
+#!/bin/bash
+cd /media/chemgen/Elements/SAK_DHK_RG/SAM_SAK
+java -jar /media/chemgen/Angiogenesis/EXOME_PIPE/picard/picard.jar MergeSamFiles \
+    $(printf 'I=%s ' *.bam) \
+    O=../merged_SAK.bam \
+	VALIDATION_STRINGENCY=LENIENT \
+	CREATE_INDEX=true
+    

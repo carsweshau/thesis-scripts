@@ -1,0 +1,12 @@
+#!/bin/bash
+ANDY_COUNT=1
+while [ $ANDY_COUNT -le 9 ]; do
+	CUR_DIR=/media/carsweshau/Elements/SAI/Output_Andy${ANDY_COUNT}/FIX_Andy${ANDY_COUNT}
+	cd ${CUR_DIR}
+	mkdir -p ../FREEC_${ANDY_COUNT}
+	for f in *_ratio.txt; do
+		STEM=$(basename "${f}" .txt);
+		awk '$3!=-1 {print}' $f > ../FREEC_${ANDY_COUNT}/${STEM}_noNA.txt
+	done
+	ANDY_COUNT=$((ANDY_COUNT=ANDY_COUNT+1))
+done

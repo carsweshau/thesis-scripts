@@ -1,0 +1,7 @@
+#!/bin/bash
+cd /media/windows/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/conifer_DHK
+CONIFER=$HOME/conifer/conifer.py
+python $CONIFER plotcalls \
+	--input DHK_001.hdf5 \
+	--calls calls.txt \
+	--outputdir ./call_imgs/

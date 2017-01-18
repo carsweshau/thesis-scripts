@@ -1,0 +1,11 @@
+#!/bin/bash
+cd /media/windows/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/FIXED_SAK
+CONIFER=$HOME/conifer/conifer.py
+PROBES=$HOME/conifer/probes.txt
+for f in *.bam; do
+STEM=$(basename "${f}" .marked.realigned.fixed.bam);
+python $CONIFER rpkm \
+	--probes $PROBES \
+	--input $STEM.marked.realigned.fixed.bam \
+	--output /media/windows/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/RPKM_SAK/$STEM.rpkm.txt
+done

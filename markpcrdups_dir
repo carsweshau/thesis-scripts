@@ -1,0 +1,19 @@
+#!/bin/bash
+echo --- running markpcrdups ---
+PICARD=/home/chemgen/EXOME/picard/picard.jar
+ANDY_COUNT=1
+while [ $ANDY_COUNT -le 9 ]; do
+	CUR_DIR=/media/chemgen/Elements/SAI/Output_Andy${ANDY_COUNT}/BAM_Andy${ANDY_COUNT}
+	cd ${CUR_DIR}
+	mkdir -p ../PCR_Andy${ANDY_COUNT}
+	for f in *.bam; do
+		STEM=$(basename "${f}" .bam);
+		java -jar $PICARD MarkDuplicates \
+		INPUT=${STEM}.bam \
+		OUTPUT=../PCR_Andy${ANDY_COUNT}/${STEM}.marked.bam \
+		METRICS_FILE=metrics \
+		VALIDATION_STRINGENCY=LENIENT \
+		CREATE_INDEX=true
+	done
+	ANDY_COUNT=$((ANDY_COUNT=ANDY_COUNT+1))
+done

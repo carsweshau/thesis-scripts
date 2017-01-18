@@ -1,0 +1,10 @@
+#!/bin/bash
+cd /media/chemgen/Elements/VCFFILES
+XMAP=/media/chemgen/Angiogenesis/EXOME_PIPE/CrossMap/bin/CrossMap.py
+I_CHAIN=/media/chemgen/Angiogenesis/EXOME_PIPE/CrossMap/hg19ToHg38.over.chain
+REF=/media/chemgen/Angiogenesis/EXOME_PIPE/CrossMap/hg38.fa
+
+for f in *.vcf; do
+    STEM=$(basename "${f}" .vcf);
+    python ${XMAP} vcf ${I_CHAIN} ${f} ${REF} ${STEM}.hg38.vcf 
+done

@@ -1,0 +1,15 @@
+#!/bin/bash
+cd /media/chemgen/Elements/SAK_DHK_RG/BQSR
+GATK=/media/chemgen/Angiogenesis/EXOME_PIPE/GATK/GenomeAnalysisTK.jar
+for f in *.BQSR_snps.vcf; do
+    STEM=$(basename "${f}" .BQSR_snps.vcf);
+    java -jar $GATK \
+    -T ApplyRecalibration \
+    -R /media/chemgen/Angiogenesis/EXOME_PIPE/bwa.kit/hg19/hg19.fa \
+    -input ${f} \
+    --ts_filter_level 99.0 \
+    -tranchesFile ${STEM}.tranches \
+    -recalFile ${STEM}_recal_data.csv \
+    -o ${STEM}_snps.vcf.recalibrated
+    
+done

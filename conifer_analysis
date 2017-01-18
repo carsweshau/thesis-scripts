@@ -1,0 +1,15 @@
+#!/bin/bash
+cd /media/carsweshau/Elements/SAI/Output_Andy1/RPKM_Andy1
+CONIFER=$HOME/conifer/conifer.py
+PROBES=$HOME/conifer/probes.txt
+mkdir -p ../conifer_Andy1
+for f in *.rpkm.txt; do
+STEM=$(basename "${f}" .rpkm.txt);
+python $CONIFER analyze \
+	--probes $PROBES \
+	--rpkm_dir ./ \
+	--output /media/windows/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/conifer_Andy1/$STEM.hdf5 \
+	--svd 5 \
+	--write_svals /media/windows/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/conifer_Andy1/$STEM.txt \
+	--plot_scree /media/windows/FASTQ_FILES/fastq_files/Project_Andy_Munkacsi/conifer_Andy1/$STEM.png
+done
