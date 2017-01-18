@@ -1,1 +1,0 @@
-samtools view *recal.bam "chr11:1,223,066-1,262,172" > andy2_muc5b.bam
