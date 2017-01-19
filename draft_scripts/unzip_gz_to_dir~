@@ -1,3 +1,0 @@
-for f in *.gz; do 
-STEM=$(basename "${f}" .gz); pv -cN source < ${f} | zcat | pv -cN zcat > ../extrc/Output_Andy6/"${STEM}"; 
-done
